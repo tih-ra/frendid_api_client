@@ -1,3 +1,16 @@
+# client = FrendidApiClient::Push
+#
+# All users
+# users = client.call "get_users", {:created_at => date}
+#
+# Some user
+# user = client.call "get_user_by_email", {:email=>email@email.com}
+#
+# Save user
+# 
+# client.call "save_user", {:login=>login, :password=>pass, :password_confirmation} (return true or false)
+# 
+#
 # FrendidApiClient
 module FrendidApiClient
   API_HOST = "frendid.com"
@@ -10,9 +23,10 @@ module FrendidApiClient
       super()
     end
     
-    def call method, options
+    def call method, options = {}
       options.each{|k,v| @options << "#{k}=#{v}"}
       @options << "apimethod=#{method}"
+      return post_request
     end
     
     def post_request
